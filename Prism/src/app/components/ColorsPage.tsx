@@ -1,15 +1,27 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Spline from "@splinetool/react-spline";
 import { MoodGrid } from "./MoodGrid";
+import { getLatestMood, getMoodQuadrant } from "../storage";
 
 export function ColorsPage() {
   const [v, setV] = useState({ x: 2, y: 1 });
+
+  // Sync with last saved mood on mount
+  useEffect(() => {
+    const latest = getLatestMood();
+    if (latest) {
+      setV({ x: latest.x, y: latest.y });
+    }
+  }, []);
+
   const color = useMemo(() => {
     const hue = Math.round(((v.x + 5) / 10) * 60 + 15);
     const sat = Math.round(60 + ((v.y + 5) / 10) * 30);
     const light = Math.round(55 + ((v.y + 5) / 10) * 15);
     return `hsl(${hue}, ${sat}%, ${light}%)`;
   }, [v]);
+
+  const { label, emoji } = getMoodQuadrant(v.x, v.y);
 
   return (
     <section
@@ -39,8 +51,13 @@ export function ColorsPage() {
             </div>
 
             <div className="mt-6 px-6 py-3 rounded-full bg-white/80 backdrop-blur border border-[#4A7C2A]/20 text-[#0E1A0E] flex items-center gap-3" style={{ fontWeight: 600 }}>
-              <span className="w-5 h-5 rounded-full shadow" style={{ background: color }} />
+              <span className="w-5 h-5 rounded-full shadow" style={{ background: color, transition: 'background 0.7s ease' }} />
               Current Mood Color: {color}
+            </div>
+
+            {/* Mood label */}
+            <div className="mt-3 px-5 py-2 rounded-full bg-[#0E1A0E]/10 text-[#0E1A0E]" style={{ fontWeight: 600, fontSize: '0.95rem' }}>
+              {emoji} You're feeling: {label}
             </div>
           </div>
         </div>

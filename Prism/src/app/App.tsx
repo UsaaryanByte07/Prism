@@ -6,6 +6,7 @@ import { BreathePage } from "./components/BreathePage";
 import { MoodPage } from "./components/MoodPage";
 import { JournalPage } from "./components/JournalPage";
 import { ColorsPage } from "./components/ColorsPage";
+import { Toaster } from "sonner";
 
 export default function App() {
   const [page, setPage] = useState<Page>("home");
@@ -21,6 +22,18 @@ export default function App() {
       <footer className="py-8 text-center text-[#0E1A0E]/60">
         Made with brightness · Prism ✦
       </footer>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          style: {
+            background: '#0E1A0E',
+            color: '#B6FF54',
+            border: '1px solid rgba(182, 255, 84, 0.3)',
+            borderRadius: '16px',
+            fontWeight: 600,
+          },
+        }}
+      />
     </div>
   );
 }

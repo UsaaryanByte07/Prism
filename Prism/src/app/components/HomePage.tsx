@@ -1,8 +1,32 @@
+import { useState, useEffect } from "react";
 import { Wind, Heart, BookOpen, ArrowUpRight } from "lucide-react";
 import Spline from "@splinetool/react-spline";
+import {
+  getStreak,
+  getTotalBreathingSessions,
+  getTotalMoodsLogged,
+  getRecentJournals,
+} from "../storage";
+
 type Page = "home" | "breathe" | "mood" | "journal" | "colors";
 
 export function HomePage({ setPage }: { setPage: (p: Page) => void }) {
+  const [stats, setStats] = useState({
+    streak: 0,
+    sessions: 0,
+    moods: 0,
+    hasData: false,
+  });
+
+  useEffect(() => {
+    const streak = getStreak();
+    const sessions = getTotalBreathingSessions();
+    const moods = getTotalMoodsLogged();
+    const journals = getRecentJournals(1);
+    const hasData = streak > 0 || sessions > 0 || moods > 0 || journals.length > 0;
+    setStats({ streak, sessions, moods, hasData });
+  }, []);
+
   const features = [
     { icon: <Wind size={26} />, title: "Breathe", desc: "Guided rhythms to slow the day down.", page: "breathe" as Page },
     { icon: <Heart size={26} />, title: "Track Mood", desc: "Plot how you feel on a gentle grid.", page: "mood" as Page },
@@ -22,12 +46,14 @@ export function HomePage({ setPage }: { setPage: (p: Page) => void }) {
             Elegance.
           </h1>
           <p className="mt-7 text-[#0E1A0E]/75 max-w-md" style={{ fontSize: '1.1rem', lineHeight: 1.6 }}>
-            Elevate your wellness with Prism's 3D magic. Unlock a world of brilliance — breathe, reflect, and grow.
+            {stats.hasData
+              ? `Welcome back! You're on a ${stats.streak > 0 ? `${stats.streak}-day streak 🔥` : 'fresh start ✨'}. Keep reflecting, breathing, and growing.`
+              : "Elevate your wellness with Prism's 3D magic. Unlock a world of brilliance — breathe, reflect, and grow."}
           </p>
           <div className="mt-9 flex items-center gap-4 flex-wrap">
             <button
               onClick={() => setPage("breathe")}
-              className="px-7 py-4 rounded-full bg-[#0E1A0E] text-[#B6FF54] hover:bg-[#1A3A1A] transition-all flex items-center gap-2 shadow-lg"
+              className="px-7 py-4 rounded-full bg-[#0E1A0E] text-[#B6FF54] hover:bg-[#1A3A1A] transition-all flex items-center gap-2 shadow-lg active:scale-95"
               style={{ fontWeight: 700 }}
             >
               Explore technology <ArrowUpRight size={18} />
@@ -58,6 +84,33 @@ export function HomePage({ setPage }: { setPage: (p: Page) => void }) {
           </button>
         ))}
       </div>
+
+      {/* Dynamic Stats - only show when user has data */}
+      {stats.hasData && (
+        <div className="max-w-7xl mx-auto px-8 lg:px-16 pb-16">
+          <div className="rounded-3xl bg-[#0E1A0E]/5 backdrop-blur border border-[#0E1A0E]/10 p-8">
+            <h2 className="text-[#0E1A0E] text-center mb-6" style={{ fontWeight: 800, fontSize: '1.5rem' }}>Your Wellness Journey</h2>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="p-4 rounded-2xl bg-white/50 border border-[#4A7C2A]/15">
+                <div className="text-[#0E1A0E]" style={{ fontSize: '2rem', fontWeight: 800 }}>
+                  {stats.streak > 0 ? `${stats.streak}` : '—'}
+                </div>
+                <div className="text-[#0E1A0E]/60 mt-1" style={{ fontSize: '0.85rem', fontWeight: 600 }}>
+                  {stats.streak > 0 ? '🔥 Day Streak' : 'Start a streak'}
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/50 border border-[#4A7C2A]/15">
+                <div className="text-[#0E1A0E]" style={{ fontSize: '2rem', fontWeight: 800 }}>{stats.sessions}</div>
+                <div className="text-[#0E1A0E]/60 mt-1" style={{ fontSize: '0.85rem', fontWeight: 600 }}>🌿 Breath Sessions</div>
+              </div>
+              <div className="p-4 rounded-2xl bg-white/50 border border-[#4A7C2A]/15">
+                <div className="text-[#0E1A0E]" style={{ fontSize: '2rem', fontWeight: 800 }}>{stats.moods}</div>
+                <div className="text-[#0E1A0E]/60 mt-1" style={{ fontSize: '0.85rem', fontWeight: 600 }}>💚 Moods Logged</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
