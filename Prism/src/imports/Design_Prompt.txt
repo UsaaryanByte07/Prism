@@ -1,0 +1,58 @@
+Design a complete 5-page wellness web app called "Prism" using a cozy, warm aesthetic (cream/beige backgrounds, warm amber/terracotta accents, soft shadows, rounded corners, friendly rounded typography like Nunito or Quicksand). The vibe is like journaling by candlelight — calming, inviting, and premium. Generate all code in JSX (React, no TypeScript).
+
+Each page will have a dedicated rectangular slot for a 3D Spline embed (I will add these separately). Design around these slots — they should feel integrated, not awkward.
+
+NAVBAR (shared across all pages):
+- Logo text "Prism" on the left with a small prism/diamond emoji or icon.
+- 5 navigation links: Home, Breathe, Mood, Journal, Colors.
+- Warm, minimal, sticky top navbar with a subtle frosted glass effect.
+- Must be fully responsive — collapse into a hamburger menu on mobile.
+
+PAGE 1 — HOME (Landing Page):
+- A welcoming hero section with a large tagline like "Unwind. Reflect. Grow." and a subtitle about the app being a daily wellness companion.
+- A prominent "Get Started" button that links to the Breathe page.
+- Below the hero: 3 small feature cards (Breathe, Track Mood, Journal) with icons and one-line descriptions.
+- 3D SLOT: A large centered area (min 500×400px) in the hero section for a reeded liquid glass prism 3D embed. Design the hero text around this slot (text left, 3D right, or text overlaying with the 3D behind).
+
+PAGE 2 — BREATHE (Breathing Exercise):
+- Center of the page: a large circular area (min 450×450px) that is the 3D SLOT for an interactive pufferfish. This is the main focus of the page.
+- Below or around the 3D slot: a visible timer display showing the current phase ("Breathe In", "Hold", "Breathe Out") and a countdown (e.g., "4s").
+- Three input fields or a settings panel where users can set durations for inhale, hold, and exhale (in seconds). Style them as cozy pill-shaped inputs.
+- Two buttons: "Start" and "Stop" — large, rounded, warm-colored.
+- A subtle circular progress ring or arc can wrap around the 3D pufferfish area to show timer progress.
+
+PAGE 3 — MOOD (Mood Tracker with X-Y Grid):
+- The main element: a large square grid/canvas (min 400×400px) representing a Valence-Arousal mood space.
+  - X-axis: Sad (left) ↔ Happy (right). Use emojis at the ends (😢 and 😊).
+  - Y-axis: Calm (bottom) ↔ Energetic (top). Use emojis at the ends (😌 and ⚡).
+  - Four corner labels with emojis: Top-Right = "Happy & Excited 🤩", Top-Left = "Stressed 😤", Bottom-Right = "Content 😊", Bottom-Left = "Tired 😴".
+- A draggable dot/circle on the grid (styled as a warm glowing orb).
+- Below the grid: a display showing current coordinates like "Valence: +3 | Arousal: -1".
+- A "Save Mood" button to log the current position.
+- 3D SLOT: A side area (right side on desktop, below grid on mobile, ~300×300px) for a color-changing blob 3D embed.
+
+PAGE 4 — JOURNAL (Quick Journal + Data):
+- TOP SECTION — Journal Entry:
+  - A warm, cozy text area (styled like a paper/notecard) where the user types a short journal entry (3 words or a sentence describing their day).
+  - A live character counter below the text area (e.g., "42 / 200 characters").
+  - A "Save Entry" button.
+- BOTTOM SECTION — Weekly Mood Chart:
+  - A scatter plot / chart area (min 500×300px) showing the user's mood positions from the last 7 days plotted on a mini X-Y grid. Each day is a labeled dot.
+  - Below the chart: a "Daily Streak" counter showing how many consecutive days the user has logged (e.g., "🔥 5-day streak").
+- 3D SLOT: A decorative area (~200×300px) positioned beside the journal text area (right side on desktop, centered above on mobile) for a dynamic candle with flame 3D embed.
+
+PAGE 5 — COLORS (Magic Background):
+- This page demonstrates how the background color changes based on mood position.
+- Include a duplicate/mini version of the mood X-Y grid (smaller, ~300×300px) with a draggable dot.
+- As the dot moves, the ENTIRE page background color should transition smoothly (the design should show this concept — maybe show 4 gradient quadrant zones to hint at the color mapping).
+- Show a live color value display (e.g., "Current Mood Color: hsl(45, 80%, 60%)").
+- 3D SLOT: A large centered area (~400×500px) for a lava lamp shape-blending 3D embed. The lava lamp should be the visual centerpiece, with the mini mood grid overlaid or beside it.
+
+GENERAL DESIGN RULES:
+- Cozy warm color palette: cream (#FFF8F0), warm beige (#F5EDE3), amber (#E8915A), terracotta (#C1666B), dark brown text (#3D2C2E).
+- All cards and panels: rounded corners (16-20px), soft warm shadows, slight frosted glass effect.
+- Buttons: pill-shaped, warm gradient (amber to terracotta), white text, subtle hover glow.
+- Spacing: generous padding and whitespace — nothing should feel cramped.
+- Typography: rounded friendly font (Nunito, Quicksand, or similar), large headings, comfortable body text.
+- Fully responsive: works beautifully on mobile, tablet, and desktop.
+- Every 3D SLOT should be a clearly marked empty div/container with the exact dimensions noted, so I can drop Spline embeds into them later. Mark them with a comment like {/* SPLINE 3D EMBED SLOT */} and give them a subtle dashed border or light placeholder background in the design.
